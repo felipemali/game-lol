@@ -1,0 +1,26 @@
+#combo-box-demo:focus {
+  border: none;
+  outline: 0;
+}
+.css-1fu34x1-MuiAutocomplete-root .MuiOutlinedInput-root {
+  background-color: transparent;
+}
+.css-1fu34x1-MuiAutocomplete-root .MuiOutlinedInput-root::placeholder {
+  color: red;
+}
+.css-1fu34x1-MuiAutocomplete-root .MuiAutocomplete-inputRoot::placeholder {
+  color: red;
+}
+.MuiInputBase-root,
+.MuiOutlinedInput-root:focus {
+  border: none;
+  outline: 0;
+}
+.css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root::placeholder {
+  color: red;
+}
+.MuiInputBase-root,
+.MuiOutlinedInput-root {
+  border: none;
+  outline: 0;
+}
