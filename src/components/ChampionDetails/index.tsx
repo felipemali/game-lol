@@ -27,7 +27,16 @@ const ChampionDetails = ({ setChamp }: ChampionshipsProps) => {
   setChamp(champ);
 
   return (
-    <Box component="div" marginTop="2rem">
+    <Box
+      component="div"
+      marginTop="2rem"
+      sx={{
+        "@media (max-width: 600px)": {
+          width: "80%",
+          margin: "1.4rem auto",
+        },
+      }}
+    >
       <table style={{ width: "100%" }}>
         <thead>
           <tr style={style()}>

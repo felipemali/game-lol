@@ -62,6 +62,12 @@ const Game = ({
         maxWidth="400px"
         textAlign="center"
         paddingBottom="1rem"
+        sx={{
+          "@media (max-width: 600px)": {
+            width: "80%",
+            margin: " 1rem auto",
+          },
+        }}
       >
         <Typography
           variant="h6"
@@ -105,8 +111,22 @@ const Game = ({
           </Typography>
         </Box>
       </Box>
-      <Box component="div" display="flex">
-        <Search>
+      <Box
+        component="div"
+        display="flex"
+        sx={{
+          "@media (max-width: 600px)": {
+            justifyContent: "center",
+          },
+        }}
+      >
+        <Search
+          sx={{
+            "@media (max-width: 600px)": {
+              width: "50%",
+            },
+          }}
+        >
           <InputChamps setInput={setInput} />
         </Search>
         <img
