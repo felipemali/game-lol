@@ -4,7 +4,7 @@ import config from "../../assets/config.png";
 import grafics from "../../assets/grafics.png";
 import play from "../../assets/play1.png";
 import { Search } from "./style";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import ChampionDetails from "../ChampionDetails";
 import { ChampsProps } from "../../api/type";
 import { useEffect, useState } from "react";
@@ -12,33 +12,67 @@ import InputChamps from "./Input";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import "./index.css";
+import { verifiqued } from "./verifications";
+import { GetRandomChamp } from "../../hooks";
 
-type GameProps = {
-  verifiqued: (value: string) => void;
+export type GameProps = {
   setChamp: (value: ChampsProps) => void;
   enteredValues: string[];
   hits: number;
   attempts: number;
+  champ: ChampsProps;
+  setHits: (hits: (arg: number) => number) => void;
+  setAttempts: (attempts: (arg: number) => number) => void;
+  setEnteredValues: (enteredValues: string[]) => void;
 };
 
 const Game = ({
-  verifiqued,
   setChamp,
   enteredValues,
   hits,
   attempts,
+  champ,
+  setHits,
+  setAttempts,
+  setEnteredValues,
 }: GameProps) => {
   const [input, setInput] = useState<string>("");
-  const [styleStack, setStyleStack] = useState("block");
+  const [displayStack, setDisplayStack] = useState("block");
+  const [statusHit, setStatusHit] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const nextChamp = () => {
+    console.log("caiu no next");
+    setChamp({
+      name: "",
+      class: "",
+      position: "",
+      partype: "",
+    });
 
-  useEffect(() => {
+    setStatusHit(false);
+    setRefresh(!refresh);
+  };
+
+  const sendData = () => {
     if (enteredValues.includes(input)) {
-      setStyleStack("block");
+      setDisplayStack("block");
       setTimeout(() => {
-        setStyleStack("none");
+        setDisplayStack("none");
       }, 3000);
     }
-  }, [verifiqued]);
+    verifiqued({
+      input,
+      enteredValues,
+      champ,
+      setAttempts,
+      attempts,
+      setHits,
+      hits,
+      setEnteredValues,
+    });
+
+    setStatusHit(true);
+  };
 
   return (
     <Box component="div" maxWidth="600px">
@@ -130,7 +164,7 @@ const Game = ({
           <InputChamps setInput={setInput} />
         </Search>
         <img
-          onClick={() => verifiqued(input)}
+          onClick={() => sendData()}
           className="play"
           src={play}
           alt=""
@@ -140,15 +174,27 @@ const Game = ({
       </Box>
       {enteredValues.filter((name, index) => {
         return enteredValues.indexOf(name) !== index;
-      }).length > 0 && (
-        <Stack display={styleStack} sx={{ width: "90%", mt: 1 }} spacing={0}>
+      }).length > 0 ? (
+        <Stack display={displayStack} sx={{ width: "90%", mt: 1 }} spacing={0}>
           <Alert variant="outlined" severity="error" sx={{ p: 0 }}>
             Esse nome ja foi digitado!!!
           </Alert>
         </Stack>
-      )}
+      ) : null}
 
-      <ChampionDetails setChamp={setChamp} />
+      {statusHit &&
+      input.toLocaleLowerCase() === champ?.name.toLocaleLowerCase() ? (
+        <>
+          <Box component="div" style={{ color: "#fff" }}>
+            <Typography variant="h5">Parabéns você acertou!!!</Typography>
+            <Button onClick={nextChamp} color="success" variant="outlined">
+              Próximo
+            </Button>
+          </Box>
+        </>
+      ) : null}
+
+      <ChampionDetails setChamp={setChamp} refresh={refresh} />
     </Box>
   );
 };

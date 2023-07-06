@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { GetRandomChamp } from "../../hooks";
 import { ChampsProps } from "../../api/type";
+import { useEffect, useState } from "react";
 const style = () => {
   return {
     color: "#fff",
@@ -20,11 +21,15 @@ const styleTd = () => {
 };
 type ChampionshipsProps = {
   setChamp: (value: ChampsProps) => void;
+  refresh: boolean;
 };
 
-const ChampionDetails = ({ setChamp }: ChampionshipsProps) => {
-  const champ = GetRandomChamp();
-  setChamp(champ);
+const ChampionDetails = ({ setChamp, refresh }: ChampionshipsProps) => {
+  const champ = GetRandomChamp(refresh);
+
+  useEffect(() => {
+    setChamp(champ);
+  }, [champ]);
 
   return (
     <Box

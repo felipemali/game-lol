@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { GetChamps } from "../api";
 import { ChampsProps } from "../api/type";
 
-type nameChampsProps = {
+export type nameChampsProps = {
   label: string;
   year: number;
 };
 
-export const GetRandomChamp = () => {
+export const GetRandomChamp = (refresh: boolean) => {
   const [champ, setChamp] = useState<ChampsProps>({
     name: "",
     position: "",
@@ -21,27 +21,34 @@ export const GetRandomChamp = () => {
 
     setChamp(randomObject);
     console.log(randomObject);
-  }, [champs]);
+  }, [champs, refresh]);
 
   return champ;
 };
 
-export const GetNameChamps = (champs: any) => {
+export const GetNameChamps = (champs: ChampsProps[]) => {
   const [nameChamps, setNameChamps] = useState<nameChampsProps[]>([]);
 
   useEffect(() => {
-    const newChamps = champs.map((e: any, index: number) => {
-      console.log(e.name);
-      return {
-        year: e.id || index,
-        label: e.name,
-      };
-    });
-    setNameChamps((prevChamps: nameChampsProps[]) => [
-      ...prevChamps,
-      ...newChamps,
-    ]);
+    if (champs) {
+      const newChamps = champs.map((e: any, index: number) => {
+        return {
+          year: e.id || index,
+          label: e.name,
+        };
+      });
+      setNameChamps((prevChamps: nameChampsProps[]) => [
+        ...prevChamps,
+        ...newChamps,
+      ]);
+    }
   }, [champs]);
-  console.log(nameChamps);
+
+  useEffect(() => {
+    if (champs.length > 0) {
+      setNameChamps([]);
+    }
+  }, [champs.length]);
+
   return nameChamps;
 };
