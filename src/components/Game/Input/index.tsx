@@ -33,23 +33,6 @@ const InputChamps = ({ setInput }: InputChampsProps) => {
         width: "100%",
         outline: 0,
       }}
-      renderOption={(props, option) => (
-        <Box
-          component="li"
-          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-          {...props}
-        >
-          <img
-            loading="lazy"
-            width="60"
-            // src={`${API_URL}${option.label}_0.jpg`}
-            src={img}
-            style={{ borderRadius: "3px" }}
-            alt="splash art dos campeões"
-          />
-          {option.label}
-        </Box>
-      )}
       renderInput={(params) => <TextField {...params} label="Campeão" />}
       onChange={handleChampChange}
     />
@@ -57,3 +40,20 @@ const InputChamps = ({ setInput }: InputChampsProps) => {
 };
 
 export default InputChamps;
+// renderOption={(props, option) => (
+//   <Box
+//     component="li"
+//     sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+//     {...props}
+//   >
+//     <img
+//       loading="lazy"
+//       width="60"
+//       // src={`${API_URL}${option.label}_0.jpg`}
+//       src={img}
+//       style={{ borderRadius: "3px" }}
+//       alt="splash art dos campeões"
+//     />
+//     {option.label}
+//   </Box>
+// )}
