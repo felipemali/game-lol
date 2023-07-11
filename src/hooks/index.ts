@@ -30,18 +30,16 @@ export const GetNameChamps = (champs: ChampsProps[]) => {
   const [nameChamps, setNameChamps] = useState<nameChampsProps[]>([]);
 
   useEffect(() => {
-    if (champs) {
-      const newChamps = champs.map((e: any, index: number) => {
-        return {
-          year: e.id || index,
-          label: e.name,
-        };
-      });
-      setNameChamps((prevChamps: nameChampsProps[]) => [
-        ...prevChamps,
-        ...newChamps,
-      ]);
-    }
+    const newChamps = champs.map((e: any, index: number) => {
+      return {
+        year: e.id || index,
+        label: e.name,
+      };
+    });
+    setNameChamps((prevChamps: nameChampsProps[]) => [
+      ...prevChamps,
+      ...newChamps,
+    ]);
   }, [champs]);
 
   useEffect(() => {
