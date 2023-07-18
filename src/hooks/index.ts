@@ -31,6 +31,9 @@ export const GetNameChamps = (champs: ChampsProps[]) => {
 
   useEffect(() => {
     if (champs) {
+      if (champs.length > 0) {
+        setNameChamps([]);
+      }
       const newChamps = champs.map((e: any, index: number) => {
         return {
           year: e.id || index,

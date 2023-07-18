@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import "./index.css";
 import { verifiqued } from "./verifications";
 import { GetRandomChamp } from "../../hooks";
+import Success from "../Success";
 
 export type GameProps = {
   setChamp: (value: ChampsProps) => void;
@@ -182,19 +183,18 @@ const Game = ({
         </Stack>
       ) : null}
 
+      <ChampionDetails setChamp={setChamp} refresh={refresh} />
       {statusHit &&
       input.toLocaleLowerCase() === champ?.name.toLocaleLowerCase() ? (
         <>
           <Box component="div" style={{ color: "#fff" }}>
-            <Typography variant="h5">Parabéns você acertou!!!</Typography>
+            <Success champName={champ.name} />
             <Button onClick={nextChamp} color="success" variant="outlined">
               Próximo
             </Button>
           </Box>
         </>
       ) : null}
-
-      <ChampionDetails setChamp={setChamp} refresh={refresh} />
     </Box>
   );
 };
