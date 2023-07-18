@@ -6,8 +6,8 @@ const API_URL = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/";
 const Success = ({ champName }: SuccessProps) => {
   return (
     <Box component="div" sx={{ margin: "auto" }}>
-      <Typography variant="h6" textAlign="center">
-        Acertouuuuuuu
+      <Typography variant="h6" textAlign="center" color="green">
+        Parabéns!!!!!!!!!
       </Typography>
       <img
         style={{ display: "block", margin: "auto" }}

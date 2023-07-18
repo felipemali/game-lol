@@ -14,12 +14,10 @@ const Home = () => {
   const [hits, setHits] = useState<number>(
     JSON.parse(localStorage.getItem("hits") || "0")
   );
-  const [attempts, setAttempts] = useState<number>(
+  const [totalAttempts, setTotalAttempts] = useState<number>(
     JSON.parse(localStorage.getItem("attempts") || "0")
   );
-
-  console.log(enteredValues);
-  // JSON.parse(localStorage.getItem("favorites") || "[]"
+  const [attempts, setAttempts] = useState<number>(10);
 
   return (
     <Box component="div" className="container-home">
@@ -30,8 +28,10 @@ const Home = () => {
         setChamp={setChamp}
         hits={hits}
         setHits={setHits}
-        attempts={attempts}
+        totalAttempts={totalAttempts}
+        setTotalAttempts={setTotalAttempts}
         setAttempts={setAttempts}
+        attempts={attempts}
       />
     </Box>
   );

@@ -20,22 +20,28 @@ export type GameProps = {
   setChamp: (value: ChampsProps) => void;
   enteredValues: string[];
   hits: number;
-  attempts: number;
+  totalAttempts: number;
   champ: ChampsProps;
   setHits: (hits: (arg: number) => number) => void;
-  setAttempts: (attempts: (arg: number) => number) => void;
+  setTotalAttempts: (attempts: (arg: number) => number) => void;
   setEnteredValues: (enteredValues: string[]) => void;
+  attempts: number;
+  setAttempts: (
+    atemptt: (arg: number) => number
+  ) => void | ((arg: number) => number);
 };
 
 const Game = ({
   setChamp,
   enteredValues,
   hits,
-  attempts,
+  totalAttempts,
   champ,
   setHits,
-  setAttempts,
+  setTotalAttempts,
   setEnteredValues,
+  attempts,
+  setAttempts,
 }: GameProps) => {
   const [input, setInput] = useState<string>("");
   const [displayStack, setDisplayStack] = useState("block");
@@ -54,6 +60,8 @@ const Game = ({
     setRefresh(!refresh);
   };
 
+  const verificationChamp =
+    input.toLocaleLowerCase() === champ?.name.toLocaleLowerCase();
   const sendData = () => {
     if (enteredValues.includes(input)) {
       setDisplayStack("block");
@@ -65,19 +73,21 @@ const Game = ({
       input,
       enteredValues,
       champ,
-      setAttempts,
-      attempts,
+      setTotalAttempts,
+      totalAttempts,
       setHits,
       hits,
       setEnteredValues,
+      setAttempts,
+      setStatusHit,
     });
 
-    setStatusHit(true);
+    // statusHit ? setStatusHit(false) : setStatusHit(true);
   };
 
   return (
     <Box component="div" maxWidth="600px">
-      <img className="logo" src={logo} alt="" />
+      <img className="logo" src={logo} alt="logo" />
 
       <Box
         sx={{
@@ -86,9 +96,9 @@ const Game = ({
         }}
         component="div"
       >
-        <img className="play" src={anotation} alt="" />
-        <img className="play" src={config} alt="" />
-        <img className="play" src={grafics} alt="" />
+        <img className="play" src={anotation} alt="anotation" />
+        <img className="play" src={config} alt="config" />
+        <img className="play" src={grafics} alt="grafics" />
       </Box>
       <Box
         border="2px solid #af9767"
@@ -125,7 +135,7 @@ const Game = ({
             padding="0.5rem 1rem"
             fontFamily="monospace"
           >
-            Tentativas {attempts}
+            Tentativas {totalAttempts}
           </Typography>
           <Typography
             variant="h6"
@@ -165,10 +175,10 @@ const Game = ({
           <InputChamps setInput={setInput} />
         </Search>
         <img
-          onClick={() => sendData()}
+          onClick={sendData}
           className="play"
           src={play}
-          alt=""
+          alt="play"
           width="58px"
           style={{ marginTop: "0.8rem" }}
         />
@@ -183,13 +193,49 @@ const Game = ({
         </Stack>
       ) : null}
 
+      {attempts > 0 && (
+        <Typography
+          color="#fff"
+          variant="body1"
+          margin="3rem 0 0 3rem"
+          sx={{
+            display: verificationChamp ? "none" : "inline-block",
+          }}
+        >
+          Poderá pular daqui{" "}
+          <Typography component="span" color="green">
+            {attempts}
+          </Typography>{" "}
+          tentativas
+        </Typography>
+      )}
+
+      {attempts === 0 && (
+        <Button
+          onClick={() => {
+            nextChamp();
+            setAttempts((oldNum) => 10);
+          }}
+          color="success"
+          variant="outlined"
+          sx={{
+            margin: "2rem 0 0 5rem",
+          }}
+        >
+          Próximo
+        </Button>
+      )}
       <ChampionDetails setChamp={setChamp} refresh={refresh} />
-      {statusHit &&
-      input.toLocaleLowerCase() === champ?.name.toLocaleLowerCase() ? (
+      {statusHit && verificationChamp ? (
         <>
           <Box component="div" style={{ color: "#fff" }}>
             <Success champName={champ.name} />
-            <Button onClick={nextChamp} color="success" variant="outlined">
+            <Button
+              onClick={nextChamp}
+              color="success"
+              variant="outlined"
+              sx={{ display: "block", margin: " 2rem auto" }}
+            >
               Próximo
             </Button>
           </Box>
