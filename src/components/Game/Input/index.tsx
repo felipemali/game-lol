@@ -2,7 +2,7 @@ import { TextField, Autocomplete, Box } from "@mui/material/";
 import { GetChamps } from "../../../api";
 import { GetNameChamps, nameChampsProps } from "../../../hooks";
 import "./index.css";
-import img from "../../../assets/play1.png";
+import img from "../../../assets/image-error.jpg";
 
 type InputChampsProps = {
   setInput: (arg: string) => void;
@@ -43,6 +43,10 @@ const InputChamps = ({ setInput }: InputChampsProps) => {
             loading="lazy"
             width="60"
             src={`${API_URL}${option.label}_0.jpg`}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = `${img}`;
+            }}
             style={{ borderRadius: "3px" }}
             alt="splash art dos campeões"
           />
